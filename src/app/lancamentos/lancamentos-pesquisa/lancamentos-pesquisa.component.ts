@@ -1,6 +1,7 @@
 import { LancamentoService, LancamentoFiltro } from './../lancamento.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { LazyLoadEvent } from 'primeng/api/public_api';
+import { Table } from 'primeng/table/table';
 
 @Component({
   selector: 'app-lancamentos-pesquisa',
@@ -12,6 +13,8 @@ export class LancamentosPesquisaComponent implements OnInit {
   totalRegistros = 0;
   filtro = new LancamentoFiltro();
   lancamentos = [];
+  //Aqui estou referenciando a tabela do HTML através da marcação #tabela
+  @ViewChild('tabela', {static: true}) grid: Table;
 
   constructor(private lancamentoService: LancamentoService){ }
 
@@ -35,4 +38,13 @@ export class LancamentosPesquisaComponent implements OnInit {
     this.pesquisar(pagina);
   }
 
+  excluir(lancamento: any){
+    this.lancamentoService.excluir(lancamento.codigo)
+      .then(() => {
+        /*Neste ponto eu chamo o método reset(), ao fazer isso,
+        ele vai voltar para a primeira página e em seguida
+        disparar a pesquisa*/
+        this.grid.reset();
+      });
+  }
 }
