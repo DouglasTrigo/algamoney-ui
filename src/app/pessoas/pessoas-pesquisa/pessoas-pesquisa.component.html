@@ -1,23 +1,65 @@
 <div class="container">
   <div class="ui-g">
 
-    <div class="ui-g-12">
-      <h1>Pessoas</h1>
-    </div>
+    <form autocomplete="off" (ngSubmit)="pesquisar()" class="ui-g-12">
 
-    <div class="ui-g-12 ui-fluid">
-      <label>Nome</label>
-      <input type="text" pInputText>
-    </div>
-
-    <div class="ui-g-12">
-      <p-button label="Pesquisar" ></p-button>
-    </div>
-
-    <div class="ui-g">
       <div class="ui-g-12">
-        <app-pessoas-grid [pessoas]="pessoas"></app-pessoas-grid>
+        <h1>Pessoas</h1>
       </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <label>Nome</label>
+        <input type="text" pInputText name="nome"
+          [(ngModel)]="filtro.nome">
+      </div>
+
+      <div class="ui-g-12">
+        <p-button label="Pesquisar" ></p-button>
+      </div>
+
+    </form>
+
+  </div>
+
+  <div class="ui-g">
+
+    <div class="ui-g-12">
+
+      <p-table [value]="pessoas" [responsive]="true"
+        [paginator]="true" [rows]="filtro.itensPorPagina"
+        [lazy]="true" [totalRecords]="totalRegistros"
+        (onLazyLoad)="aoMudarPagina($event)">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Nome</th>
+            <th>Cidade</th>
+            <th>Estado</th>
+            <th>Status</th>
+            <th class="col-acoes"></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-pessoa>
+          <tr>
+            <td>{{pessoa.nome}}</td>
+            <td>{{pessoa.endereco.cidade}}</td>
+            <td>{{pessoa.endereco.estado}}</td>
+            <td>
+              <a href="javascript:;" [pTooltip]="pessoa.ativo ? 'Desativar' : 'Ativar'"
+                  tooltipPosition="top" [style.color]="'#333'">
+                {{pessoa.ativo ? 'Ativo' : 'Inativo'}}
+              </a>
+            </td>
+            <td>
+              <button pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top"></button>&nbsp;
+              <button pButton icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="top"></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          Nenhuma pessoa encontrada
+        </ng-template>
+      </p-table>
+
     </div>
 
     <div class="ui-g-12">
@@ -25,4 +67,5 @@
     </div>
 
   </div>
+
 </div>
