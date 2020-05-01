@@ -58,7 +58,20 @@ export class PessoasPesquisaComponent implements OnInit{
     this.pessoasService.excluir(pessoa.codigo)
       .then(response => {
         this.grid.reset();
-        this.messageService.add({severity:'success', detail:'Pessoa excluída com sucesso!'});
+        this.messageService.add({severity: 'success', detail: 'Pessoa excluída com sucesso!'});
+      })
+      .catch(erro => this.errorHandler.handle(erro));
+  }
+
+  alterarStatus(pessoa: any) {
+    const novoStatus = !pessoa.ativo;
+
+    this.pessoasService.mudarStatus(pessoa.codigo, novoStatus)
+      .then(response => {
+        const acao = novoStatus ? 'ativada' : 'desativada';
+
+        pessoa.ativo = novoStatus;
+        this.messageService.add({severity: 'success', detail: `Pessoa ${acao} com sucesso!`});
       })
       .catch(erro => this.errorHandler.handle(erro));
   }

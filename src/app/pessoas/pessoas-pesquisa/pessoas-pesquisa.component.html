@@ -44,8 +44,10 @@
             <td>{{pessoa.endereco.cidade}}</td>
             <td>{{pessoa.endereco.estado}}</td>
             <td>
-              <a href="javascript:;" [pTooltip]="pessoa.ativo ? 'Desativar' : 'Ativar'"
-                  tooltipPosition="top" [style.color]="'#333'">
+              <a href="javascript:;"
+                [pTooltip]="pessoa.ativo ? 'Desativar' : 'Ativar'"
+                tooltipPosition="top" [style.color]="'#333'"
+                (click)="alterarStatus(pessoa)">
                 {{pessoa.ativo ? 'Ativo' : 'Inativo'}}
               </a>
             </td>
