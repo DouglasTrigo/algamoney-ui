@@ -1,9 +1,12 @@
-import { LancamentoService, LancamentoFiltro } from './../lancamento.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
+
 import { LazyLoadEvent } from 'primeng/api/public_api';
 import { Table } from 'primeng/table/table';
-import {MessageService} from 'primeng/api';
-import {ConfirmationService} from 'primeng/api';
+import { MessageService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
+
+import { ErrorHandlerService } from './../../core/error-handler.service';
+import { LancamentoService, LancamentoFiltro } from './../lancamento.service';
 
 @Component({
   selector: 'app-lancamentos-pesquisa',
@@ -20,7 +23,8 @@ export class LancamentosPesquisaComponent implements OnInit {
 
   constructor(private lancamentoService: LancamentoService,
               private messageService: MessageService,
-              private confirmation: ConfirmationService){ }
+              private confirmation: ConfirmationService,
+              private errorHandler: ErrorHandlerService){ }
 
   ngOnInit(): void {
     /* this.pesquisar(); Não precisa mais desta pesquisa aqui,
@@ -34,7 +38,8 @@ export class LancamentosPesquisaComponent implements OnInit {
       .then(resultado => {
         this.totalRegistros = resultado.total;
         this.lancamentos = resultado.lancamentos;
-      });
+      })
+      .catch(erro => this.errorHandler.handle(erro));
   }
 
   aoMudarPagina(event: LazyLoadEvent){
@@ -59,6 +64,7 @@ export class LancamentosPesquisaComponent implements OnInit {
       disparar a pesquisa*/
       this.grid.reset();
       this.messageService.add({severity:'success', detail:'Lançamento excluído com sucesso!'});
-    });
+    })
+    .catch(erro => this.errorHandler.handle(erro));
   }
 }
