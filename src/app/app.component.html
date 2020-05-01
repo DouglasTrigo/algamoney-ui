@@ -1,2 +1,10 @@
 <app-navbar></app-navbar>
 <app-lancamentos-pesquisa></app-lancamentos-pesquisa>
+
+<p-toast position="bottom-right"></p-toast>
+<p-confirmDialog header="Confirmação" icon="pi pi-question-circle" #confirmacao>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-times" label="Não" (click)="confirmacao.reject()"></button>
+    <button type="button" pButton icon="pi pi-check" label="Sim" (click)="confirmacao.accept()"></button>
+  </p-footer>
+</p-confirmDialog>
