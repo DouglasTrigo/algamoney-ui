@@ -1,3 +1,4 @@
+import { CategoriaService } from './../categorias/categoria.service';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { registerLocaleData } from '@angular/common';
@@ -30,6 +31,7 @@ registerLocaleData(localePt);
   providers: [
     LancamentoService,
     PessoaService,
+    CategoriaService,
     ErrorHandlerService,
 
     MessageService,
