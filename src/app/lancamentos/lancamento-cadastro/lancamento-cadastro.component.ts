@@ -42,7 +42,6 @@ export class LancamentoCadastroComponent implements OnInit {
       this.carregarLancamento(codigoLancamento);
     }
 
-
     this.carregarCategorias();
     this.carregarPessoas();
   }
@@ -80,12 +79,30 @@ export class LancamentoCadastroComponent implements OnInit {
   }
 
   salvar(form: NgForm) {
+    if (this.editando) {
+      this.atualizarLancamento(form);
+    } else {
+      this.adicionarLancamento(form);
+    }
+  }
+
+  adicionarLancamento(form: NgForm) {
     this.lancamentoService.adicionar(this.lancamento)
       .then(() => {
         this.messageService.add({severity: 'success', detail: 'Lançamento adicionado com sucesso!'});
 
         form.reset();
         this.lancamento = new Lancamento();
+      })
+      .catch(erro => this.errorHandler.handle(erro));
+  }
+
+  atualizarLancamento(form: NgForm) {
+    this.lancamentoService.atualizar(this.lancamento)
+      .then(lancamento => {
+        this.lancamento = lancamento;
+
+        this.messageService.add({severity: 'success', detail: 'Lançamento atualizado com sucesso!'});
       })
       .catch(erro => this.errorHandler.handle(erro));
   }
