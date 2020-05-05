@@ -8,7 +8,7 @@ import { PessoaService } from './../../pessoas/pessoa.service';
 import { ErrorHandlerService } from './../../core/error-handler.service';
 import { CategoriaService } from './../../categorias/categoria.service';
 import { LancamentoService } from './../lancamento.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-lancamento-cadastro',
@@ -32,7 +32,8 @@ export class LancamentoCadastroComponent implements OnInit {
     private lancamentoService: LancamentoService,
     private messageService: MessageService,
     private errorHandler: ErrorHandlerService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -88,11 +89,12 @@ export class LancamentoCadastroComponent implements OnInit {
 
   adicionarLancamento(form: NgForm) {
     this.lancamentoService.adicionar(this.lancamento)
-      .then(() => {
+      .then(lancamentoAdicionado => {
         this.messageService.add({severity: 'success', detail: 'Lançamento adicionado com sucesso!'});
 
-        form.reset();
-        this.lancamento = new Lancamento();
+        //form.reset();
+        //this.lancamento = new Lancamento();
+        this.router.navigate(['/lancamentos', lancamentoAdicionado.codigo]);
       })
       .catch(erro => this.errorHandler.handle(erro));
   }
@@ -105,6 +107,16 @@ export class LancamentoCadastroComponent implements OnInit {
         this.messageService.add({severity: 'success', detail: 'Lançamento atualizado com sucesso!'});
       })
       .catch(erro => this.errorHandler.handle(erro));
+  }
+
+  novo(form: NgForm) {
+    form.reset();
+
+    setTimeout(function() {
+      this.lancamento = new Lancamento();
+    }.bind(this), 1);
+
+    this.router.navigate(['/lancamentos/novo']);
   }
 
 }
