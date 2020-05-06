@@ -26,7 +26,8 @@ export class LancamentosPesquisaComponent implements OnInit {
               private messageService: MessageService,
               private confirmation: ConfirmationService,
               private errorHandler: ErrorHandlerService,
-              private title: Title){ }
+              private title: Title
+              ){ }
 
   ngOnInit(): void {
     /* this.pesquisar(); Não precisa mais desta pesquisa aqui,

@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { LazyLoadEvent } from 'primeng/api/public_api';
@@ -22,12 +23,15 @@ export class PessoasPesquisaComponent implements OnInit{
   constructor(private pessoasService: PessoaService,
               private errorHandler: ErrorHandlerService,
               private messageService: MessageService,
-              private confirmation: ConfirmationService){ }
+              private confirmation: ConfirmationService,
+              private title: Title
+              ){ }
 
   ngOnInit(): void {
     /* this.pesquisar(); Não precisa mais desta pesquisa aqui,
     pois ao iniciar o componente, a table do primeNg já
     chama o método aoMudarPagina*/
+    this.title.setTitle('Pesquisa de pessoas');
   }
 
   pesquisar(pagina = 0) {
