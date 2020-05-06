@@ -4,6 +4,7 @@ import { NgModule, LOCALE_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
+import { Title } from '@angular/platform-browser';
 
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
@@ -39,6 +40,7 @@ registerLocaleData(localePt);
 
     MessageService,
     ConfirmationService,
+    Title,
     { provide: LOCALE_ID, useValue: 'pt-BR'}
   ]
 })
