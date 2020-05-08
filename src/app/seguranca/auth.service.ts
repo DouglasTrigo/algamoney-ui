@@ -26,7 +26,11 @@ export class AuthService {
 
     const body = `username=${usuario}&password=${senha}&grant_type=password`;
 
-    return this.http.post(this.oauthTokenUrl, body, { headers })
+    return this.http.post(this.oauthTokenUrl, body,
+        { headers , withCredentials: true /*Com esta opção como true,
+        estou dizendo que quero armazenar os Cookies.
+        No caso o refresh_token vem no Cookie, por isso
+        eu preciso sinalizar para ele armazenar.*/})
       .toPromise()
       .then(response => {
         this.amazenarToken(response['access_token']);
@@ -38,6 +42,27 @@ export class AuthService {
               return Promise.reject('Usuário ou senha inválida');
         }
         return Promise.reject(response);
+      });
+  }
+
+  obterNovoAccessToken(): Promise<void> {
+    const headers = new HttpHeaders()
+      .append('Content-Type', 'application/x-www-form-urlencoded')
+      .append('Authorization', 'Basic YW5ndWxhcjpAYW5ndWxAcjA=');
+
+    const body = 'grant_type=refresh_token';
+
+    return this.http.post(this.oauthTokenUrl, body,
+        { headers , withCredentials: true})
+      .toPromise()
+      .then(response => {
+        this.amazenarToken(response['access_token']);
+        console.log('Novo access token criado!');
+        return Promise.resolve(null);
+      })
+      .catch(erro => {
+        console.log('Erro ao renovar token.', erro);
+        return Promise.resolve(null);
       });
   }
 
