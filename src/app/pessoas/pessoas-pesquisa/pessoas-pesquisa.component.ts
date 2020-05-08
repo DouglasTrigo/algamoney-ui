@@ -1,3 +1,4 @@
+import { AuthService } from './../../seguranca/auth.service';
 import { Title } from '@angular/platform-browser';
 import { Component, OnInit, ViewChild } from '@angular/core';
 
@@ -24,7 +25,8 @@ export class PessoasPesquisaComponent implements OnInit{
               private errorHandler: ErrorHandlerService,
               private messageService: MessageService,
               private confirmation: ConfirmationService,
-              private title: Title
+              private title: Title,
+              public auth: AuthService
               ){ }
 
   ngOnInit(): void {

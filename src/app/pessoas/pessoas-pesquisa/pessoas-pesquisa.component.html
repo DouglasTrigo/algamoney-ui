@@ -35,7 +35,9 @@
             <th>Cidade</th>
             <th>Estado</th>
             <th>Status</th>
-            <th class="col-acoes"></th>
+            <th class="col-acoes"
+            *ngIf="auth.temPermissao('ROLE_CADASTRAR_PESSOA') ||
+              auth.temPermissao('ROLE_REMOVER_PESSOA')"></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-pessoa>
@@ -51,11 +53,15 @@
                 {{pessoa.ativo ? 'Ativo' : 'Inativo'}}
               </a>
             </td>
-            <td>
+            <td
+              *ngIf="auth.temPermissao('ROLE_CADASTRAR_PESSOA') ||
+              auth.temPermissao('ROLE_REMOVER_PESSOA')">
               <button pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top"
-                [routerLink]="['/pessoas', pessoa.codigo]"></button>&nbsp;
+                [routerLink]="['/pessoas', pessoa.codigo]"
+                *ngIf="auth.temPermissao('ROLE_CADASTRAR_PESSOA')"></button>&nbsp;
               <button pButton icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="top"
-                (click)="confirmarExclusao(pessoa)"></button>
+                (click)="confirmarExclusao(pessoa)"
+                *ngIf="auth.temPermissao('ROLE_REMOVER_PESSOA')"></button>
             </td>
           </tr>
         </ng-template>
@@ -67,7 +73,8 @@
     </div>
 
     <div class="ui-g-12">
-      <p-button label="Nova Pessoa" routerLink="/pessoas/novo"></p-button>
+      <p-button label="Nova Pessoa" routerLink="/pessoas/novo"
+        *ngIf="auth.temPermissao('ROLE_CADASTRAR_PESSOA')"></p-button>
     </div>
 
   </div>

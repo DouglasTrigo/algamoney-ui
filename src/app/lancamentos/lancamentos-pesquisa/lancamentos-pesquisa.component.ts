@@ -1,3 +1,4 @@
+import { AuthService } from './../../seguranca/auth.service';
 import { Title } from '@angular/platform-browser';
 import { Component, OnInit, ViewChild } from '@angular/core';
 
@@ -26,7 +27,8 @@ export class LancamentosPesquisaComponent implements OnInit {
               private messageService: MessageService,
               private confirmation: ConfirmationService,
               private errorHandler: ErrorHandlerService,
-              private title: Title
+              private title: Title,
+              public auth: AuthService
               ){ }
 
   ngOnInit(): void {
