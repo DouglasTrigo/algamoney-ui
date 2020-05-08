@@ -29,11 +29,15 @@ export class AuthService {
     return this.http.post(this.oauthTokenUrl, body, { headers })
       .toPromise()
       .then(response => {
-        console.log(response);
         this.amazenarToken(response['access_token']);
       })
       .catch(response => {
-        console.log(response);
+        const responseError = response.error;
+        if (response.status === 400
+            && responseError.error === 'invalid_grant') {
+              return Promise.reject('Usuário ou senha inválida');
+        }
+        return Promise.reject(response);
       });
   }
 
