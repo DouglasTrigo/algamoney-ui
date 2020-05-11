@@ -45,9 +45,7 @@
             <th class="col-data-header">Vencimento</th>
             <th class="col-data-header">Pagamento</th>
             <th class="col-valor-header">Valor</th>
-            <th class="col-acoes"
-              *ngIf="auth.temPermissao('ROLE_CADASTRAR_LANCAMENTO') ||
-                auth.temPermissao('ROLE_REMOVER_LANCAMENTO')"></th>
+            <th class="col-acoes"></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-lancamento>
@@ -59,16 +57,15 @@
             <td class="col-valor-content">
               <span [style.color]="lancamento.tipo === 'DESPESA' ? 'red' : 'blue'">{{lancamento.valor | number:'1.2-2'}}</span>
             </td>
-            <td *ngIf="auth.temPermissao('ROLE_CADASTRAR_LANCAMENTO') ||
-                  auth.temPermissao('ROLE_REMOVER_LANCAMENTO')">
+            <td>
               <button pButton icon="pi pi-pencil"
                       pTooltip="Editar" tooltipPosition="top"
                       [routerLink]="['/lancamentos', lancamento.codigo]"
-                      *ngIf="auth.temPermissao('ROLE_CADASTRAR_LANCAMENTO')"></button>&nbsp;
+                      [disabled]="!auth.temPermissao('ROLE_CADASTRAR_LANCAMENTO')"></button>&nbsp;
               <button pButton icon="pi pi-trash"
                 pTooltip="Excluir" tooltipPosition="top"
                 (click)="confirmarExclusao(lancamento)"
-                *ngIf="auth.temPermissao('ROLE_REMOVER_LANCAMENTO')"></button>
+                [disabled]="!auth.temPermissao('ROLE_REMOVER_LANCAMENTO')"></button>
             </td>
           </tr>
         </ng-template>
@@ -81,7 +78,7 @@
 
     <div class="ui-g-12">
       <p-button label="Novo Lançamento" routerLink="/lancamentos/novo"
-        *ngIf="auth.temPermissao('ROLE_CADASTRAR_LANCAMENTO')"></p-button>
+        [disabled]="!auth.temPermissao('ROLE_CADASTRAR_LANCAMENTO')"></p-button>
     </div>
 
   </div>
