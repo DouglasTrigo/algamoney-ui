@@ -1,3 +1,4 @@
+import { NaoAutorizadoComponent } from './nao-autorizado.component';
 import { RouterModule } from '@angular/router';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -21,7 +22,11 @@ import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component'
 registerLocaleData(localePt);
 
 @NgModule({
-  declarations: [NavbarComponent, PaginaNaoEncontradaComponent],
+  declarations: [
+    NavbarComponent,
+    PaginaNaoEncontradaComponent,
+    NaoAutorizadoComponent
+  ],
   imports: [
     CommonModule,
     ToastModule,
